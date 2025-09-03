@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import {  Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Slider from '@react-native-community/slider';
 
@@ -10,58 +10,68 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
-
-      <View style = {[styles.imageWrapper, styles.elevation]}>
-        <Image
-        source={require('.assets/img/gallo.png')}
-        style={styles.musicImage}
-        />
-      </View>
-
-      <View> 
-        <Text style={[styles.songContent, styles.songTitle]}>
-          Nome da Musica
-        </Text>
-        <Text style={[styles.songContent, styles.songTitle]}>
-          Autor da Musica
-        </Text>
-      </View>
-
-      <View>
-        <Slider
-        style={styles.progressBar}
-        value={10}
-        minimumValue={0}
-        maximumValue={100}
-        thumbTintColor='#FFD369'
-        minimumTrackTintColor='#FFD369'
-        maximumTrackTintColor='fff'
-        onSlidingComplete={() => {}}
-        />
-        <View style={styles.progressLevelDuration}>
-          <Text style={styles.progressLabelText}>00:00</Text>
-          <Text style={styles.progressLabelText}>00:00</Text>
+        <View style={[styles.imageWrapper, styles.elevation]}>
+          <Image source={require('./assets/img/gallo.png')} style={styles.musicImage} />
         </View>
-      </View>
+        <View>
+          <Text style={[styles.songContent, styles.songTitle]}>Nome da Música</Text>
+        </View>
+        <View>
+          <Text style={[styles.songContent, styles.songArtist]}>Autor da Música</Text>
+        </View>
+
+        <View>
+          <Slider 
+            style={styles.progessBar}
+            value={10}
+            minimumValue={0}
+            maximumValue={100}
+            thumbTintColor='#FFD369'
+            minimumTrackTintColor='#FFD369'
+            maximumTrackTintColor='#FFF'
+            onSlidingComplete={() => {}}
+          />
+          <View style={styles.progressLevelDuration}>
+            <Text style={styles.progessLabelText}>00:00</Text>
+            <Text style={styles.progessLabelText}>00:00</Text>
+
+          </View>
+        </View>
+
+        <View style={styles.musicControlsContainer}>
+          <TouchableOpacity name='play-skip-back-outline' size={35} color='#FFD369'>
+            <Ionicons/>
+          </TouchableOpacity>
+          <TouchableOpacity name='pause-circle' size={75} color='#FFD369'>
+            <Ionicons/>
+          </TouchableOpacity>
+          <TouchableOpacity name='play-skip-foward-outline' size={35} color='#FFD369'>
+            <Ionicons/>
+          </TouchableOpacity>
+        </View>  
 
       </View>
       <View style={styles.footer}>
         <View style={styles.iconWrapper}>
           <TouchableOpacity>
-            <Ionicons name='heart-outline' size={30} color="#88888"/>
+            <Ionicons name='heart-outline' size={30} color={'#888888'} />
           </TouchableOpacity>
+
           <TouchableOpacity>
-            <Ionicons name='repeat' size={30} color="#88888"/>
+            <Ionicons name='repeat' size={30} color={'#888888'} />
           </TouchableOpacity>
+        
           <TouchableOpacity>
-            <Ionicons name='share-outline' size={30} color="#88888"/>
+            <Ionicons name='share-outline' size={30} color={'#888888'} />
           </TouchableOpacity>
+
           <TouchableOpacity>
-            <Ionicons name='ellipsis-horizontal' size={30} color="#88888"/>
+            <Ionicons name='ellipsis-horizontal' size={30} color={'#888888'} />
           </TouchableOpacity>
+          
         </View>
       </View>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </SafeAreaView>
   );
 }
@@ -80,28 +90,25 @@ const styles = StyleSheet.create({
   footer: {
     width: width,
     alignItems: 'center',
-    paddingTop: 15,
-    paddingBottom: 40,
-    borderTopColor: '#39E45',
+    paddingVertical: 20,
+    borderTopColor: '#393E45',
     borderTopWidth: 1,
   },
   iconWrapper: {
-    flexDirection: 'row',
     width: '80%',
-    justifyContent: 'space-between'
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   imageWrapper: {
     width: 340,
-    height: 360,
+    height: 340,
     marginVertical: 20,
   },
-
   musicImage: {
     width: '100%',
-    height: '100¨%',
+    height: '100%',
     borderRadius: 15,
   },
-
   elevation: {
     elevation: 5,
     shadowOffset: {
@@ -111,21 +118,40 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 3.84,
   },
-
   songContent: {
     textAlign: 'center',
     color: '#EEEEEE',
-
   },
-
   songTitle: {
     fontSize: 18,
-    fontWeight: '600',
-
+    fontWeight: '600'
   },
-
   songArtist: {
     fontSize: 16,
     fontWeight: '300',
-  } 
+  },
+  progressBar: {
+    width: 340,
+    height: 40,
+    marginTop: 20,
+
+  },
+  progressLevelDuration: {
+    width: 340,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  progressLabelText: {
+    color: '#fff',
+    fontWeight: '500',
+
+  },
+  musicControlsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    width: '60%',
+    marginTop: 10,
+
+  }
 });
