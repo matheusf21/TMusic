@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Dimensions, FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
@@ -8,14 +8,21 @@ import songs from './model/data';
 const { width, height } = Dimensions.get('window');
 
 export default function App() {
+  const [sound, setSound] = useState(null);
+  const [songIndex, setSongIndex] = useState(0);
+  const [songStatus, setSongStatus] = useState(null);
+  const [isPlaying, setIsPlaying ] = useState(false);
+  const [isLooping, setIsLooping ] = useState(false);
 
+  const songSlider = useRef(null);
   const scrollX = useRef (new Animeted.Value(0)).current;
 
   useEffect(() => {
-    scrollX.addListener(({value})) => {
-      console.log('ScrollX : ${value}');
-      const index = Math.round(value/width);
-      console.log(index);
+    scrollX.addListener(({value}) => {
+      const index = Math.round(value / width);
+      setSongIndex(index);
+      //console.log(`ScrollX : ${value}`);
+      //console.log(index);
     });
   }, []);
 
@@ -23,7 +30,7 @@ export default function App() {
     return (
       <View style={styles.mainImageWrapper}>
          <View style={[styles.imageWrapper, styles.elevation]}>
-          <Image source={require('./assets/img/gallo.png')} 
+          <Image source={require('./assets/img/gallo.png')} />
              <Image source={item.artwork} style={styles.musicImage} />
         </View>
        
@@ -45,7 +52,7 @@ export default function App() {
          onScroll={Animated.event(
           [
             {
-              native.Event: {
+              nativeEvent: {
                 contentOffs: {X:scrollX}
               }
             }
@@ -56,11 +63,11 @@ export default function App() {
 
 
       <View>
-          <Text style={[styles.songContent, styles.songTitle]}>Nome da Música</Text>
+          <Text style={[styles.songContent, styles.songTitle]}>{songs[songIndex].title}</Text>
         </View>
        
         <View>
-          <Text style={[styles.songContent, styles.songArtist]}>Autor da Música</Text>
+          <Text style={[styles.songContent, styles.songArtist]}>{songs[songIndex].artist}</Text>
         </View>
 
         <View>
@@ -85,7 +92,7 @@ export default function App() {
           <TouchableOpacity name='play-skip-back-outline' size={35} color='#FFD369'>
             <Ionicons/>
           </TouchableOpacity>
-          <TouchableOpacity name='pause-circle' size={75} color='#FFD369'>
+          <TouchableOpacity name={isPlaying ? 'pause-circle' : 'play-circle'} size={75} color='#FFD369'>
             <Ionicons/>
           </TouchableOpacity>
           <TouchableOpacity name='play-skip-foward-outline' size={35} color='#FFD369'>
@@ -200,7 +207,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     width: '60%',
-    marginTop: 10,
+    marginVertical: 20,
 
   }
 });
